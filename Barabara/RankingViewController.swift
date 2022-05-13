@@ -13,13 +13,15 @@ class RankingViewController: UIViewController {
     @IBOutlet var rankingLabel2: UILabel!
     @IBOutlet var rankingLabel3: UILabel!
 
-    let defaults = UserDefaults.standard
+    let defaults: UserDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         rankingLabel1.text = String(defaults.integer(forKey: "score1"))
+        
         rankingLabel2.text = String(defaults.integer(forKey: "score2"))
+        
         rankingLabel3.text = String(defaults.integer(forKey: "score3"))
 
     }

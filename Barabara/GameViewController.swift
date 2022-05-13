@@ -37,13 +37,13 @@ class GameViewController: UIViewController {
         
         positionX = [width/2, width/2, width/2]
         self.start()
-        
+    
     }
     
     @objc func up() {
         for i in 0..<3 {
             if positionX[i] > width || positionX[i] < 0 {
-                dx[i] = dx[i] * -1
+                dx[i] = dx[i] * (-1)
             }
             positionX[i] += dx[i]
         }
@@ -53,16 +53,19 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func step(){
+        
         if timer.isValid == true{
             timer.invalidate()
         }
         for i in 0..<3 {
                 score = score - abs(Int(width / 2 - positionX[i])) * 2
-            
-            resultLabel.text = "Score: \(String(score))"
-            resultLabel.isHidden = false
         }
-    func saveResult() {
+        
+        resultLabel.text = "Score: \(String(score))"
+        resultLabel.isHidden = false
+        
+        let defaults: UserDefaults = UserDefaults.standard
+        
         let highScore1: Int = defaults.integer(forKey: "score1")
         let highScore2: Int = defaults.integer(forKey: "score2")
         let highScore3: Int = defaults.integer(forKey: "score3")
@@ -72,14 +75,17 @@ class GameViewController: UIViewController {
             defaults.set(highScore1, forKey:"score2")
             defaults.set(highScore2, forKey:"score3")
         } else if score > highScore2 {
+            
             defaults.set(score, forKey: "score2")
             defaults.set(highScore2, forKey:"score3")
+            
         } else if score > highScore3 {
+            
             defaults.set(score, forKey:"score3")
+            
         }
         defaults.synchronize()
     }
-}
     @IBAction func retry() {
         score = 1000
         positionX = [width / 2, width / 2, width / 2]
